@@ -7,3 +7,8 @@
 2025-07-01 17:33:26,409 - vm_interop.converter - ERROR - qemu-img failed: qemu-img: Could not open '/Users/meetadubey120/Downloads/10MB.raw': invalid VMDK image descriptor
 
 2025-07-01 17:48:00,967 - vm_interop.network_analyzer - ERROR - Traffic capture failed: Interface 'Wi-Fi' not found !
+2025-08-12 11:08:22,239 - vm_interop.converter - ERROR - Conversion to OVA/OVF failed: [Errno 2] No such file or directory: 'ovftool'
+2025-08-12 11:28:43,521 - vm_interop.converter - INFO - Created simple OVF file: /Users/meetadubey120/Tool-to-Combat-Lack-of-Interoperability-in-Virtual-Machines--1/test result/10MB.ova
+2025-08-12 11:30:01,876 - vm_interop.converter - INFO - Created simple OVF file: test result/10MB_converted.ovf
+2025-08-13 21:52:07,086 - vm_interop.converter - ERROR - qemu-img failed: qemu-img: Unknown file format 'vhd'
+
