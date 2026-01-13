@@ -29,10 +29,16 @@ class NetworkOrchestrator:
 
 def assign_static_ip(ip, username, password, target_ip):
     try:
-        cmd = f"echo -e 'auto eth0\\niface eth0 inet static\\naddress {target_ip}' | sudo tee /etc/network/interfaces"
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(ip, username=username, password=password, timeout=10)
+        # Detect remote OS
+        stdin, stdout, stderr = ssh.exec_command('uname -s')
+        os_type = stdout.read().decode().strip()
+        if os_type == 'Darwin':
+            ssh.close()
+            return False, 'Static IP assignment is not supported for macOS guests.'
+        cmd = f"echo -e 'auto eth0\\niface eth0 inet static\\naddress {target_ip}' | sudo tee /etc/network/interfaces"
         stdin, stdout, stderr = ssh.exec_command(cmd)
         out = stdout.read().decode()
         err = stderr.read().decode()

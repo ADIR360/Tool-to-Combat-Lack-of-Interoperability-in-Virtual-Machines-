@@ -4,6 +4,7 @@ Connectivity Verifier module for testing ping, SSH, and port reachability betwee
 
 import subprocess
 import threading
+import platform
 
 class ConnectivityVerifier:
     def __init__(self):
@@ -12,7 +13,12 @@ class ConnectivityVerifier:
 
     def ping_vm(self, ip, timeout=2):
         try:
-            result = subprocess.run(['ping', '-c', '1', '-W', str(timeout), ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if platform.system() == 'Darwin':
+                # macOS: no -W flag, just use -c 1
+                result = subprocess.run(['ping', '-c', '1', ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            else:
+                # Linux: use -W for timeout
+                result = subprocess.run(['ping', '-c', '1', '-W', str(timeout), ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             if result.returncode == 0:
                 return True, "Ping successful"
             else:
